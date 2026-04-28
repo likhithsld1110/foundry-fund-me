@@ -34,10 +34,7 @@ contract FundMeTest is Test {
         fundme.fund();
     }
 
-    function testdatastructureupdates()
-        public
-        createprankuserandfundsomemeoney
-    {
+    function testdatastructureupdates() public createprankuserandfundsomemeoney {
         //vm.prank(USER); // THE next transaction will be sent by USER
         //fundme.fund{value: SEND_VALUE}();
         uint256 amountsent = fundme.getterfunctionforaddresstoamountsent(USER);
@@ -49,18 +46,12 @@ contract FundMeTest is Test {
         assertEq(funder, USER);
     }
 
-    function testONlyownnercanwithdraw()
-        public
-        createprankuserandfundsomemeoney
-    {
+    function testONlyownnercanwithdraw() public createprankuserandfundsomemeoney {
         vm.expectRevert();
         fundme.withdraw();
     }
 
-    function testownerbalacebeforeandafterwithdraw()
-        public
-        createprankuserandfundsomemeoney
-    {
+    function testownerbalacebeforeandafterwithdraw() public createprankuserandfundsomemeoney {
         //arrange
         uint256 ownerstartingbalace = fundme.getterfunctionforowner().balance;
         uint256 fundmestartingbalance = address(fundme).balance;
@@ -71,10 +62,7 @@ contract FundMeTest is Test {
         uint256 fundmelastbalance = address(fundme).balance;
         assertEq(fundmelastbalance, 0);
         uint256 ownnerlastbalance = fundme.getterfunctionforowner().balance;
-        assertEq(
-            ownerstartingbalace + fundmestartingbalance,
-            ownnerlastbalance
-        );
+        assertEq(ownerstartingbalace + fundmestartingbalance, ownnerlastbalance);
     }
 
     function testwithdrawwithmultiplefunders() public {

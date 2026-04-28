@@ -20,10 +20,7 @@ contract FundMe {
     }
 
     function fund() public payable {
-        require(
-            msg.value.getConversion(pricefeed_i) >= MINIMUM_USD,
-            "Don't worry I will sponser you"
-        );
+        require(msg.value.getConversion(pricefeed_i) >= MINIMUM_USD, "Don't worry I will sponser you");
         s_funders.push(msg.sender);
         s_addresstoamountsent[msg.sender] += msg.value;
     }
@@ -36,7 +33,7 @@ contract FundMe {
 
     function withdraw() public onlyowner {
         uint256 numberoftotalfunders = s_funders.length;
-        for (uint index = 0; index < numberoftotalfunders; index++) {
+        for (uint256 index = 0; index < numberoftotalfunders; index++) {
             address funder = s_funders[index];
             s_addresstoamountsent[funder] = 0;
         }
@@ -48,9 +45,7 @@ contract FundMe {
         // bool suc = payable(msg.sender).send(address(this).balance); //returns a bool no automatic revert, only reverts if we add a require statement
         // require(suc,"FAILED");
         //call
-        (bool success, ) = payable(msg.sender).call{
-            value: address(this).balance
-        }("");
+        (bool success,) = payable(msg.sender).call{value: address(this).balance}("");
         require(success, "FAILED");
     }
 
@@ -73,15 +68,11 @@ contract FundMe {
     }
 
     //since our data is private we need to create getter functions for them
-    function getterfunctionforaddresstoamountsent(
-        address funderaddress
-    ) external view returns (uint256) {
+    function getterfunctionforaddresstoamountsent(address funderaddress) external view returns (uint256) {
         return s_addresstoamountsent[funderaddress];
     }
 
-    function getterfunctionforfunders(
-        uint256 index
-    ) external view returns (address funderaddress) {
+    function getterfunctionforfunders(uint256 index) external view returns (address funderaddress) {
         return s_funders[index];
     }
 

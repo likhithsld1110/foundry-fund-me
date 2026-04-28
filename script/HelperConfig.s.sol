@@ -25,14 +25,10 @@ contract HelperConfig is Script {
 
     struct NetworkConfig {
         address pricefeed;
-     
     }
 
     function SepoliaETHGET() public pure returns (NetworkConfig memory) {
-        NetworkConfig memory sepoliaaddress = NetworkConfig({
-            pricefeed: 0x694AA1769357215DE4FAC081bf1f309aDC325306
-        
-        });
+        NetworkConfig memory sepoliaaddress = NetworkConfig({pricefeed: 0x694AA1769357215DE4FAC081bf1f309aDC325306});
         return sepoliaaddress;
     }
 
@@ -41,14 +37,9 @@ contract HelperConfig is Script {
             return activeConfig;
         }
         vm.startBroadcast();
-        MockV3Aggregator mockpricefeed = new MockV3Aggregator(
-            DECIMALS,
-            INITIAL_PRICE
-        );
+        MockV3Aggregator mockpricefeed = new MockV3Aggregator(DECIMALS, INITIAL_PRICE);
         vm.stopBroadcast();
-        NetworkConfig memory anvilConfig = NetworkConfig({
-            pricefeed: address(mockpricefeed)
-        });
+        NetworkConfig memory anvilConfig = NetworkConfig({pricefeed: address(mockpricefeed)});
         return anvilConfig;
     }
 }
